@@ -210,3 +210,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+// Test Supabase connection
+console.log("MyMediaHub Supabase connected:", supabaseClient);
