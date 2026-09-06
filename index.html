@@ -1,426 +1,427 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animated Login</title>
 
-  <title>MyMediaHub | Your Media. Your Content. Your Hub.</title>
-  <meta name="description" content="MyMediaHub - futuristic media management interface.">
-  <meta name="keywords" content="MyMediaHub, media tools, media management">
-  <meta name="theme-color" content="#05050a">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-  <link rel="stylesheet" href="style.css">
+body{
+    min-height:100vh;
+    font-family:Arial, sans-serif;
+    background:
+        radial-gradient(circle at 20% 20%, #6c2cff55, transparent 35%),
+        radial-gradient(circle at 80% 80%, #00d9ff44, transparent 35%),
+        #080812;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    color:white;
+}
+
+/* Floating background particles */
+.particle{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:white;
+    border-radius:50%;
+    opacity:.35;
+    animation:float 6s infinite ease-in-out;
+}
+
+.p1{left:10%;top:20%;animation-delay:0s}
+.p2{left:80%;top:15%;animation-delay:1s}
+.p3{left:20%;top:80%;animation-delay:2s}
+.p4{left:90%;top:65%;animation-delay:3s}
+.p5{left:50%;top:10%;animation-delay:4s}
+
+@keyframes float{
+    0%,100%{transform:translateY(0) scale(1)}
+    50%{transform:translateY(-35px) scale(1.5)}
+}
+
+/* Main container */
+.container{
+    width:min(92%,420px);
+    position:relative;
+    z-index:5;
+    animation:pageIn 1s ease forwards;
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(50px) scale(.92);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+/* Animated logo */
+.logo{
+    width:95px;
+    height:95px;
+    margin:0 auto 25px;
+    border-radius:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:45px;
+    background:linear-gradient(135deg,#7c3cff,#00c8ff);
+    box-shadow:
+        0 0 25px #713cff88,
+        0 0 60px #00c8ff44;
+    animation:
+        logoFloat 3s ease-in-out infinite,
+        logoRotate 1s ease forwards;
+}
+
+@keyframes logoFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
+}
+
+@keyframes logoRotate{
+    from{
+        opacity:0;
+        transform:scale(0) rotate(-180deg);
+    }
+    to{
+        opacity:1;
+        transform:scale(1) rotate(0);
+    }
+}
+
+/* Card */
+.card{
+    position:relative;
+    padding:32px 25px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:28px;
+    background:rgba(15,15,30,.78);
+    backdrop-filter:blur(20px);
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.55),
+        inset 0 1px rgba(255,255,255,.08);
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    border-radius:30px;
+    padding:2px;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        #8b5cff,
+        transparent,
+        #00d9ff,
+        transparent
+    );
+    background-size:300% 300%;
+    animation:borderMove 5s linear infinite;
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    pointer-events:none;
+}
+
+@keyframes borderMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+h1{
+    text-align:center;
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#aaaac0;
+    margin-bottom:28px;
+    font-size:14px;
+}
+
+/* Inputs */
+.input-box{
+    position:relative;
+    margin-bottom:18px;
+}
+
+.input-box input{
+    width:100%;
+    height:58px;
+    padding:0 18px;
+    border:none;
+    outline:none;
+    border-radius:15px;
+    color:white;
+    background:#ffffff0c;
+    border:1px solid #ffffff18;
+    font-size:15px;
+    transition:.3s;
+}
+
+.input-box input:focus{
+    border-color:#7c5cff;
+    background:#ffffff12;
+    box-shadow:0 0 20px #7c5cff25;
+    transform:translateY(-2px);
+}
+
+.input-box label{
+    position:absolute;
+    left:18px;
+    top:19px;
+    color:#88889d;
+    pointer-events:none;
+    transition:.25s;
+    font-size:14px;
+}
+
+.input-box input:focus + label,
+.input-box input:not(:placeholder-shown) + label{
+    top:-8px;
+    left:14px;
+    padding:0 6px;
+    background:#10101f;
+    color:#9b82ff;
+    font-size:11px;
+}
+
+/* Button */
+.login-btn{
+    width:100%;
+    height:58px;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    background:linear-gradient(135deg,#7c3cff,#00bfff);
+    box-shadow:0 10px 30px #663cff44;
+    transition:.25s;
+    position:relative;
+    overflow:hidden;
+}
+
+.login-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 35px #663cff66;
+}
+
+.login-btn:active{
+    transform:scale(.97);
+}
+
+.login-btn::after{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:100px;
+    background:#ffffff44;
+    border-radius:50%;
+    left:-120px;
+    top:-20px;
+    transition:.6s;
+}
+
+.login-btn:hover::after{
+    left:110%;
+}
+
+/* Bottom text */
+.bottom{
+    text-align:center;
+    margin-top:22px;
+    color:#858599;
+    font-size:13px;
+}
+
+.bottom span{
+    color:#9b7cff;
+    cursor:pointer;
+}
+
+/* Success animation */
+.success{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:#080812ee;
+    z-index:20;
+}
+
+.success.show{
+    display:flex;
+    animation:fadeIn .4s ease;
+}
+
+.success-box{
+    text-align:center;
+    animation:successPop .6s cubic-bezier(.2,1.5,.5,1);
+}
+
+.check{
+    width:90px;
+    height:90px;
+    margin:auto auto 20px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:45px;
+    background:linear-gradient(135deg,#7c3cff,#00c8ff);
+    box-shadow:0 0 50px #7c3cff77;
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+@keyframes successPop{
+    from{
+        transform:scale(.4);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+/* Mobile */
+@media(max-width:480px){
+    .card{
+        padding:28px 20px;
+    }
+
+    h1{
+        font-size:27px;
+    }
+
+    .logo{
+        width:82px;
+        height:82px;
+        font-size:38px;
+    }
+}
+</style>
 </head>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
+
 <body>
 
-  <div id="particles"></div>
-  <div class="grid-bg"></div>
+<div class="particle p1"></div>
+<div class="particle p2"></div>
+<div class="particle p3"></div>
+<div class="particle p4"></div>
+<div class="particle p5"></div>
 
-  <!-- NAVBAR -->
-  <header class="navbar">
-    <a href="#home" class="logo">
-      <span class="logo-icon">◇</span>
-      <span>MyMediaHub</span>
-    </a>
+<div class="container">
 
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu">
-      ☰
-    </button>
+    <div class="logo">⚡</div>
 
-    <nav class="nav-links" id="navLinks">
-      <a href="#home">Home</a>
-      <a href="#features">Features</a>
-      <a href="#platforms">Platforms</a>
-      <a href="#how">How It Works</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+    <div class="card">
 
-  <!-- HERO -->
-  <main>
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Login to continue</p>
 
-    <section class="hero" id="home">
+        <form id="loginForm">
 
-      <div class="orb orb1"></div>
-      <div class="orb orb2"></div>
-      <div class="orb orb3"></div>
+            <div class="input-box">
+                <input
+                    type="email"
+                    id="email"
+                    placeholder=" "
+                    required
+                >
+                <label>Email Address</label>
+            </div>
 
-      <div class="floating f1">◇</div>
-      <div class="floating f2">✦</div>
-      <div class="floating f3">◉</div>
-      <div class="floating f4">◈</div>
+            <div class="input-box">
+                <input
+                    type="password"
+                    id="password"
+                    placeholder=" "
+                    required
+                >
+                <label>Password</label>
+            </div>
 
-      <div class="hero-content">
-
-        <div class="badge">
-          <span></span>
-          FUTURE OF MEDIA TOOLS
-        </div>
-
-        <h1 class="hero-title">
-          <span class="media">MYMEDIA</span><span class="hub">HUB</span>
-        </h1>
-
-        <p class="tagline">
-          Your Media. Your Content. Your Hub.
-        </p>
-
-        <p class="hero-description">
-          Manage and access your media tools in one powerful hub.
-          Built for a modern, fast and mobile-friendly experience.
-        </p>
-
-        <div class="url-box">
-
-          <label for="mediaUrl">MEDIA URL</label>
-
-          <input
-            type="url"
-            id="mediaUrl"
-            placeholder="Paste your media URL here..."
-          >
-
-          <div class="button-row">
-
-            <button class="analyze-btn" id="analyzeBtn">
-              Analyze Media <span>→</span>
+            <button class="login-btn" type="submit">
+                Login
             </button>
-
-            <button class="clear-btn" id="clearBtn">
-              Clear
-            </button>
-
-          </div>
-
-          <p id="status"></p>
-
-        </div>
-
-        <div class="result-card hidden" id="resultCard">
-
-          <div class="result-top">
-            <div class="result-icon">◉</div>
-
-            <div>
-              <h3>Media Analysis</h3>
-              <p>Demo frontend result</p>
-            </div>
-          </div>
-
-          <div class="result-info">
-            <div>
-              <span>Platform</span>
-              <strong id="platformResult">Media Source</strong>
-            </div>
-
-            <div>
-              <span>Status</span>
-              <strong class="green">Ready</strong>
-            </div>
-          </div>
-
-          <div class="notice">
-            Media actions are available only where you own the content or have permission.
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- PLATFORMS -->
-    <section class="section" id="platforms">
-
-      <div class="section-title reveal">
-        <span>MEDIA INTERFACES</span>
-        <h2>Supported Platforms</h2>
-        <p>A modern interface designed for different media sources.</p>
-      </div>
-
-      <div class="card-grid">
-
-        <div class="platform-card tilt">
-          <div class="symbol">▶</div>
-          <h3>YouTube</h3>
-          <p>Media interface</p>
-        </div>
-
-        <div class="platform-card tilt">
-          <div class="symbol">◎</div>
-          <h3>Instagram</h3>
-          <p>Media interface</p>
-        </div>
-
-        <div class="platform-card tilt">
-          <div class="symbol">♪</div>
-          <h3>TikTok</h3>
-          <p>Media interface</p>
-        </div>
-
-        <div class="platform-card tilt">
-          <div class="symbol">f</div>
-          <h3>Facebook</h3>
-          <p>Media interface</p>
-        </div>
-
-        <div class="platform-card tilt">
-          <div class="symbol">𝕏</div>
-          <h3>X</h3>
-          <p>Media interface</p>
-        </div>
-
-        <div class="platform-card tilt">
-          <div class="symbol">+</div>
-          <h3>Other Sources</h3>
-          <p>Expandable system</p>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- FEATURES -->
-    <section class="section" id="features">
-
-      <div class="section-title reveal">
-        <span>POWERFUL EXPERIENCE</span>
-        <h2>Built for the Future</h2>
-      </div>
-
-      <div class="feature-grid">
-
-        <div class="feature-card tilt">
-          <div>⚡</div>
-          <h3>Fast Interface</h3>
-          <p>Fast and lightweight experience built with simple web technology.</p>
-        </div>
-
-        <div class="feature-card tilt">
-          <div>📱</div>
-          <h3>Mobile Friendly</h3>
-          <p>Designed to work smoothly on Android phones.</p>
-        </div>
-
-        <div class="feature-card tilt">
-          <div>◈</div>
-          <h3>Privacy Focused</h3>
-          <p>Transparent frontend architecture.</p>
-        </div>
-
-        <div class="feature-card tilt">
-          <div>▣</div>
-          <h3>Media Management</h3>
-          <p>Simple and clean media workflow.</p>
-        </div>
-
-        <div class="feature-card tilt">
-          <div>✦</div>
-          <h3>Modern Design</h3>
-          <p>Neon effects, glass design and futuristic animations.</p>
-        </div>
-
-        <div class="feature-card tilt">
-          <div>🔒</div>
-          <h3>Secure Experience</h3>
-          <p>Ready for future authorized backend integrations.</p>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- HOW IT WORKS -->
-    <section class="section" id="how">
-
-      <div class="section-title reveal">
-        <span>SIMPLE PROCESS</span>
-        <h2>How It Works</h2>
-      </div>
-
-      <div class="steps">
-
-        <div class="step reveal">
-          <div class="number">01</div>
-          <h3>Paste Your Link</h3>
-          <p>Enter your media URL into MyMediaHub.</p>
-        </div>
-
-        <div class="step reveal">
-          <div class="number">02</div>
-          <h3>Analyze Information</h3>
-          <p>Analyze available media information.</p>
-        </div>
-
-        <div class="step reveal">
-          <div class="number">03</div>
-          <h3>Authorized Actions</h3>
-          <p>Use tools only where you own or are authorized to access content.</p>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- LEGAL -->
-    <section class="section">
-
-      <div class="legal-card reveal">
-
-        <div class="legal-icon">⚖</div>
-
-        <div>
-          <h2>Responsible Media Use</h2>
-
-          <p>
-            MyMediaHub is designed for lawful media management.
-            Users are responsible for ensuring they have ownership,
-            permission, or another legal right before downloading,
-            saving, or processing media.
-          </p>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- MONETIZATION -->
-    <section class="section">
-
-      <div class="section-title reveal">
-        <span>FUTURE BUSINESS</span>
-        <h2>Monetization Options</h2>
-      </div>
-
-      <div class="feature-grid">
-
-        <div class="feature-card">
-          <div>▤</div>
-          <h3>Advertisement Area</h3>
-          <p>Future compliant advertising space.</p>
-        </div>
-
-        <div class="feature-card">
-          <div>★</div>
-          <h3>Premium Features</h3>
-          <p>Optional advanced future features.</p>
-        </div>
-
-        <div class="feature-card">
-          <div>↗</div>
-          <h3>Affiliate Tools</h3>
-          <p>Future transparent affiliate partnerships.</p>
-        </div>
-
-        <div class="feature-card">
-          <div>◆</div>
-          <h3>Sponsored Content</h3>
-          <p>Clearly disclosed sponsorship areas.</p>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- FAQ -->
-    <section class="section" id="faq">
-
-      <div class="section-title reveal">
-        <span>QUESTIONS</span>
-        <h2>Frequently Asked Questions</h2>
-      </div>
-
-      <div class="faq-box">
-
-        <div class="faq-item">
-          <button>Is MyMediaHub free? <span>+</span></button>
-          <p>The current frontend can be hosted as a static website.</p>
-        </div>
-
-        <div class="faq-item">
-          <button>Does it work on mobile? <span>+</span></button>
-          <p>Yes, the website is designed for Android and mobile browsers.</p>
-        </div>
-
-        <div class="faq-item">
-          <button>Can I use it on Android? <span>+</span></button>
-          <p>Yes. It is mobile responsive.</p>
-        </div>
-
-        <div class="faq-item">
-          <button>What content can I process? <span>+</span></button>
-          <p>Only content you own or have permission to access.</p>
-        </div>
-
-        <div class="faq-item">
-          <button>Can I monetize this website? <span>+</span></button>
-          <p>Future options can include compliant ads and premium features.</p>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- CONTACT -->
-    <section class="section" id="contact">
-
-      <div class="contact-box reveal">
-
-        <div>
-          <span>CONTACT</span>
-          <h2>Let's Build the Future</h2>
-          <p>Static frontend contact form demonstration.</p>
-        </div>
-
-        <form id="contactForm">
-
-          <input type="text" placeholder="Your Name" required>
-
-          <input type="email" placeholder="Your Email" required>
-
-          <textarea placeholder="Your Message" required></textarea>
-
-          <button class="analyze-btn" type="submit">
-            Send Message
-          </button>
-
-          <p id="formStatus"></p>
 
         </form>
 
-      </div>
+        <div class="bottom">
+            Don't have an account?
+            <span>Create Account</span>
+        </div>
 
-    </section>
+    </div>
+</div>
 
-  </main>
+<!-- Success screen -->
+<div class="success" id="success">
 
+    <div class="success-box">
 
-  <footer>
+        <div class="check">✓</div>
 
-    <div class="footer-logo">◇ MyMediaHub</div>
+        <h2>Login Successful</h2>
 
-    <p>© 2026 MyMediaHub. All rights reserved.</p>
+        <p style="color:#999;margin-top:8px">
+            Welcome back!
+        </p>
 
-    <div>
-      <a href="#home">Privacy Policy</a>
-      <a href="#home">Terms of Use</a>
-      <a href="#home">Copyright Policy</a>
-      <a href="#contact">Contact</a>
     </div>
 
-  </footer>
+</div>
 
-  <script src="script.js"></script>
+<script>
+
+const form = document.getElementById("loginForm");
+const success = document.getElementById("success");
+
+form.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    const button = form.querySelector(".login-btn");
+
+    button.innerHTML = "Loading...";
+    button.style.pointerEvents = "none";
+
+    setTimeout(() => {
+
+        success.classList.add("show");
+
+    }, 1000);
+
+});
+
+</script>
 
 </body>
 </html>
